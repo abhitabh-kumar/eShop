@@ -23,15 +23,16 @@ const Singup = () => {
     e.preventDefault();
     const config = { headers: { "Content-Type": "multipart/form-data" } };
 
-    const newForm = new FormData();
+    let formData = new FormData();
 
-    newForm.append("file", avatar);
-    newForm.append("name", name);
-    newForm.append("email", email);
-    newForm.append("password", password);
+    formData.set("file", avatar);
+    formData.set("name", name);
+    formData.set("email", email);
+    formData.set("password", password);
+    console.log(Object.fromEntries(formData));
 
     axios
-      .post(`${server}/user/create-user`, newForm, config)
+      .post(`${server}/user/create-user`, formData, config)
       .then((res) => {
         toast.success(res.data.message);
         setName("");
